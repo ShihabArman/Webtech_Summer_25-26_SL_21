@@ -1,0 +1,236 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+        <title>Portfolio</title>
+        <style>
+            body{
+                text-align: center;
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                background-color: white;
+                color: black;
+            }
+
+            nav {
+                margin-bottom: 20px;
+            }
+
+            nav button {
+                font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                margin: 5px;
+                width: 150px;
+                height: 40px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+            .selection{
+                width:100%;
+                margin: 10px 0;
+                padding: 10px;
+                border: 1px solid #ccc;
+                margin-top: 10px;
+                text-align: left;
+            }
+            .project-card {
+            
+            padding-left: 10px;
+            margin-bottom: 15px;
+        }
+
+        input, textarea {
+            font-style: italic;
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        .submit-btn {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            width: 150px;
+            height: 35px;
+            cursor: pointer;
+        }
+
+        .error {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: red;
+            font-weight: bold;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+
+        #successMessage {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: green;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        #themeBtn {
+            margin-top: 20px;
+            width: 200px;
+            height: 40px;
+            cursor: pointer;
+        }
+        </style>
+    </head>
+
+    <body>
+        <h1 id="title">Portfolio - Light Mode</h1>
+
+    <nav>
+        <button onclick="showSection('about')">About Me</button>
+        <button onclick="showSection('projects')">Projects</button>
+        <button onclick="showSection('contact')">Contact Me</button>
+    </nav>
+
+    <div id="about" class="section" style="display: block;">
+        <h2>About Me</h2>
+        <p>Hello! I am a student of AIub. </p>
+        <p>I am learning web development.</p>
+        <p>I enjoy building interfaces and using HTML, CSS, and JavaScript.</p>
+    </div>
+
+
+    <div id="projects" class="section" style="display: none;">
+        <h2>My Projects</h2>
+        <div class="project-card">
+            <h3>Project 1: Custom Landing Page</h3>
+            <p>A responsive landing layout built using HTML, CSS, and JavaScript.</p>
+        </div>
+        <div class="project-card">
+            <h3>Project 2: JavaScript designed App</h3>
+            <p>A simple web program that interacts with elements on user command.</p>
+        </div>
+    </div>
+
+    <div id="contact" class="section" style="display: none;">
+        <h2>Contact Me</h2>
+
+        <label>Name:</label>
+        <input type="text" id="name" placeholder="Enter Your Name">
+        <p id="nameError" class="error" style="display: none;">Name cannot be empty</p>
+
+        <label>Email:</label>
+       
+        <input type="email" id="email" placeholder="Enter Your Email">
+        <p id="emailError" class="error" style="display: none;">Please enter a valid email address</p>
+
+        <label>Message:</label>
+        <textarea id="message" rows="4" placeholder="Enter Your Message"></textarea>
+        <p id="messageError" class="error" style="display: none;">Message must be at least 10 characters long</p>
+
+        <button class="submit-btn" onclick="validateForm()">Send Message</button>
+        <h3 id="successMessage" style="display: none;">Your message has been sent successfully.</h3>
+    </div>
+
+    <br>
+   
+    <button id="themeBtn" onclick="toggleMode()">Switch To Dark Mode</button>
+
+    <script>
+        
+        function showSection(sectionId) 
+        {
+           
+            document.getElementById("about").style.display = "none";
+            document.getElementById("projects").style.display = "none";
+            document.getElementById("contact").style.display = "none";
+
+            
+            document.getElementById(sectionId).style.display = "block";
+        }
+
+        
+        function toggleMode() 
+        {
+            var body = document.body;
+            var title = document.getElementById("title");
+            var button = document.getElementById("themeBtn");
+            var sections = document.getElementsByClassName("section");
+
+            if(body.style.backgroundColor == "black") 
+            {
+                body.style.backgroundColor = "white";
+                body.style.color = "black";
+                title.innerHTML = "Portfolio - Light Mode";
+                button.innerHTML = "Switch To Dark Mode";
+            }
+
+            else 
+            {
+                body.style.backgroundColor = "black";
+                body.style.color = "white";
+                title.innerHTML = "Portfolio - Dark Mode";
+                button.innerHTML = "Switch To Light Mode";
+            }
+        }
+
+        
+        function validateForm() 
+        {
+            var name = document.getElementById("name").value;
+            var emailElement = document.getElementById("email"); 
+            var emailValue = emailElement.value;                
+            var msg = document.getElementById("message").value;
+
+            var nameErr = document.getElementById("nameError");
+            var emailErr = document.getElementById("emailError");
+            var msgErr = document.getElementById("messageError");
+            var success = document.getElementById("successMessage");
+
+            var isValid = true;
+
+           
+            if(name == "") 
+            {
+                nameErr.style.display = "block";
+                isValid = false;
+            } 
+            else 
+            {
+                nameErr.style.display = "none";
+            }
+
+            
+            if(emailValue == "" || !emailElement.checkValidity()) 
+            {
+                emailErr.style.display = "block";
+                isValid = false;
+            } 
+            else 
+            {
+                emailErr.style.display = "none";
+            }
+
+           
+            if(msg.length < 10) 
+            {
+                msgErr.style.display = "block";
+                isValid = false;
+            } 
+            else 
+            {
+                msgErr.style.display = "none";
+            }
+
+            
+            if(isValid) 
+            {
+                success.style.display = "block";
+                
+               
+                document.getElementById("name").value = "";
+                document.getElementById("email").value = "";
+                document.getElementById("message").value = "";
+            } 
+            else 
+            {
+                success.style.display = "none";
+            }
+        }
+    </script>
+        
+    </body>
+</html>
